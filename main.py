@@ -45,3 +45,48 @@ for col in data.columns:
     
 data.isna().sum()
 
+from sklearn.model_selection import train_test_split
+
+X = data.drop(['Loan_Status'], axis=1)
+Y = data['Loan_Status']
+X.shape, Y.shape
+
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.4, random_state = 1)
+
+X_train.shape, X_test.shape, Y_train.shape, Y_test.shape
+
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+
+# Create pipelines with scaling for each classifier
+pipelines = {
+    'RandomForestClassifier': rfc,
+    'KNeighborsClassifier': make_pipeline(StandardScaler(), knn),
+    'SVC': make_pipeline(StandardScaler(), svc),
+    'LogisticRegression': make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000))
+}
+
+for name, clf in pipelines.items():
+    clf.fit(X_train, Y_train)
+    Y_pred = clf.predict(X_train)
+    print(f"Accuracy score of {name} = {100 * metrics.accuracy_score(Y_train, Y_pred):.2f}")
+
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.metrics import accuracy_score
+
+# Create pipelines with scaling for each classifier
+pipelines = {
+    'RandomForestClassifier': rfc,
+    'KNeighborsClassifier': make_pipeline(StandardScaler(), knn),
+    'SVC': make_pipeline(StandardScaler(), svc),
+    'LogisticRegression': make_pipeline(StandardScaler(), LogisticRegression(max_iter=1000))
+}
+
+for name, clf in pipelines.items():
+    clf.fit(X_train, Y_train)
+    Y_pred = clf.predict(X_test)
+    print(f"Accuracy score of {name} = {100 * accuracy_score(Y_test, Y_pred):.2f}")
+
+
+
