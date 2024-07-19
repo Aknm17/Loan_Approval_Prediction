@@ -40,3 +40,8 @@ sns.heatmap(data.corr(),cmap='BrBG',fmt='.2f',linewidths=2, annot=True)
 
 sns.catplot(x="Gender", y= "Married", hue="Loan_Status", kind="bar",data=data)
 
+for col in data.columns:
+    data[col] = data[col].fillna(data[col].mean())
+    
+data.isna().sum()
+
