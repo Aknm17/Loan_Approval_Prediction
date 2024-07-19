@@ -33,3 +33,7 @@ for col in list(obj[obj].index):
 
 obj = (data.dtypes == 'object')
 print("Categorical variables:", len(list(obj[obj].index)))
+
+plt.figure(figsize=(12,6))
+
+sns.heatmap(data.corr(),cmap='BrBG',fmt='.2f',linewidths=2, annot=True)
